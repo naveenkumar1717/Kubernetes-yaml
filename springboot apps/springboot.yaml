@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+    name: bikeapp-deployment
+    labels:
+     app: bikeapp
+spec: 
+  replicas: 2
+  selector: 
+    matchLabels: 
+      app: bikeapp    
+  template: 
+    metadata: 
+      labels: 
+        app: bikeapp
+    spec: 
+       containers:
+        - name: bikespringboot-application
+          image: naveentrodo/bikeimage:latest
+          ports: 
+            - containerPort: 8017
+---
+apiVersion: v1
+kind: Service
+metadata:
+ name: bikeapp-service
+spec:
+ selector:
+   app: bikeapp
+ ports:
+   - protocol: TCP
+     port: 8017
+     targetPort: 8017

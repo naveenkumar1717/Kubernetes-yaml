@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: app-namespace
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ name: app-deployment
+ namespace: app-namespace
+ labels:
+  app: bikeapp1
+spec:
+ replicas: 2
+ selector:
+   matchLabels:
+     app: bikeapp1
+ template:
+   metadata:
+     labels:
+       app: bikeapp1
+   spec:
+     containers:
+     - name: bikespringboot
+       image: naveentrodo/application1:latest
+       ports:
+          - containerPort: 8013
+---
+apiVersion: v1
+kind: Service
+metadata:
+ name: app-service
+ namespace: app-namespace
+spec:
+ selector:
+   app: bikeapp1
+ ports:
+  - protocol: TCP
+    port: 8013
+    targetPort: 8013
+---
+
+
+
+
+
+
+
